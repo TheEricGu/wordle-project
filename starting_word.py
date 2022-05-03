@@ -10,20 +10,20 @@ def import_words(file_name):
         words = f.read().splitlines()
     return words
 
-def starting_word(words_accepted, words_solutions, raw_address):
-    if raw_address:
+def starting_word(words_accepted, words_solutions, first):
+    if first:
         words_accepted = import_words(words_accepted)
         words_solutions = import_words(words_solutions)
-    print("Accepted words:", len(words_accepted))
-    print("Solution words:", len(words_solutions))
+        print("Accepted words:", len(words_accepted))
+        print("Solution words:", len(words_solutions))
 
     accepted_word_string = ''.join(words_accepted)
     letter_counts = dict(Counter(accepted_word_string))
-    print("Cumulative letter counts:", letter_counts)
+    if first: print("Cumulative letter counts:", letter_counts)
 
     letter_frequencies = {letter:count/len(words_accepted) 
     for letter,count in letter_counts.items()}
-    print("Cumulative letter frequencies:", letter_frequencies)
+    if first: print("Cumulative letter frequencies:", letter_frequencies)
 
     letter_frequencies = pd.DataFrame({'Letter':list(letter_frequencies.keys()),
     'Frequency':list(letter_frequencies.values())}).sort_values('Frequency',
@@ -43,23 +43,24 @@ def starting_word(words_accepted, words_solutions, raw_address):
 
         temp_letter_positions_df = pd.DataFrame(letter_position_counter, index=[word])
         letter_positions_df = pd.concat([letter_positions_df, temp_letter_positions_df])
-    print("Letter position dataframe:")
-    print(letter_positions_df.head(5))
+    if first: 
+        print("Letter position dataframe:")
+        print(letter_positions_df.head(5))
 
-    print("Shape of letter position dataframe:", letter_positions_df.shape)
+    if first: print("Shape of letter position dataframe:", letter_positions_df.shape)
     for column in letter_positions_df.columns:
         if letter_positions_df[column].sum() == 0:
             letter_positions_df.drop(column, axis=1, inplace=True)
-    print("Shape after dropping columns with only zeros:", letter_positions_df.shape)
+    if first: print("Shape after dropping columns with only zeros:", letter_positions_df.shape)
             
-    print("Fitting COPOD model...")
+    if first: print("Fitting COPOD model...")
     copod_model = COPOD(contamination=0.01)
     copod_model.fit(letter_positions_df)
 
-    print("Generating decision scores...")
+    if first: print("Generating decision scores...")
     letter_positions_df['score'] = copod_model.decision_scores_
     letter_positions_df.sort_values('score',inplace=True)
 
-    print("Top 10 words with highest decision scores:")
+    if first: print("Top 10 words with highest decision scores:")
     letter_positions_df['rank'] = range(1,len(letter_positions_df)+1)
     print(letter_positions_df.head(10)[['score','rank']])

@@ -4,12 +4,11 @@ from tqdm import tqdm
 
 def black_checker(black, word):
     for b in black:
-        if b in word:
+        if b in word and word.count(b) == 1:
             return False
     return True
 
 def yellow_checker(yellow, word, guess):
-    return True
     word_counts = Counter(word)
     guess_counts = Counter(guess)
     for y in yellow:
@@ -25,7 +24,6 @@ def yellow_checker(yellow, word, guess):
     return True
 
 def green_checker(green, word):
-    # return True
     for letter, position in green:
         if word[position] != letter:
             return False
@@ -49,9 +47,9 @@ def prune_words(accepted, solutions, guess, colors):
             print("Invalid color input")
             return
 
-    print(black)
-    print(yellow)
-    print(green)
+    # print(black)
+    # print(yellow)
+    # print(green)
 
     for word in tqdm(accepted):
         if black_checker(black, word):
@@ -65,7 +63,7 @@ def prune_words(accepted, solutions, guess, colors):
             if yellow_checker(yellow, word, guess):
                 if green_checker(green, word):
                     new_solutions.append(word)
-    print("New solutions:", new_solutions)
+    # print("New solutions:", new_solutions)
         
     return new_accepted, new_solutions
 
@@ -87,7 +85,7 @@ def solver(accepted, solutions):
 
 print("Welcome to Worldle Solver!")
 print("Generating the top 10 best guesses for your starting word...")
-# starting_word("words_accepted.txt", "words_solutions.txt", True)
+starting_word("words_accepted.txt", "words_solutions.txt", True)
 accepted = import_words("words_accepted.txt") 
 solutions = import_words("words_solutions.txt") 
 solver(accepted, solutions)
