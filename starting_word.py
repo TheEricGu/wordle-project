@@ -64,3 +64,4 @@ def starting_word(words_accepted, words_solutions, first):
     if first: print("Top 10 words with highest decision scores:")
     letter_positions_df['rank'] = range(1,len(letter_positions_df)+1)
     print(letter_positions_df.head(10)[['score','rank']])
+    return letter_positions_df.index[0]

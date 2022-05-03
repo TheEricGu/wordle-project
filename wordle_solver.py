@@ -80,14 +80,15 @@ def solver(accepted, solutions):
         starting_word(accepted, solutions, False)
 
 def color(guess, solution):
+    
     # returns wordle coloring in bbgyy format (as a 5 character string)-----------------------------------
-    pass
+    returns("bbbbb")
 
 def test_solver(accepted, solutions, guess, solution):
     for i in range(6):
         colors = color(guess, solution)
         accepted, solutions = prune_words(accepted, solutions, guess, colors)
-        guess = starting_word(accepted, solutions, False)[0] #no shot this works--------------------------------------
+        guess = starting_word(accepted, solutions, False)
         if guess == solution:
             return i+1
     return 0
@@ -95,7 +96,7 @@ def test_solver(accepted, solutions, guess, solution):
 
 print("Welcome to Worldle Solver!")
 print("Generating the top 10 best guesses for your starting word...")
-# starting_word("words_accepted.txt", "words_solutions.txt", True)
+starting_word("words_accepted.txt", "words_solutions.txt", True)
 accepted = import_words("words_accepted.txt") 
 solutions = import_words("words_solutions.txt") 
 solver(accepted, solutions)
