@@ -6,9 +6,13 @@ def simulate(accepted, solutions, iterations):
   solutions = import_words(solutions)
   accepted = import_words(accepted)
   results = []
+  guess = "saint"
   for i in range(iterations):
+    print("Iteration: " + str(i))
     solution = random.choice(solutions)
+    print("Solution: " + solution)
     results.append(test_solver(accepted, solutions, guess, solution))
+
   wins = 0
   turns = 0  
   losses = 0
@@ -20,8 +24,9 @@ def simulate(accepted, solutions, iterations):
     else:
       losses += 1
     
+  print(results)
   print(f"Wins: {wins}")
   print(f"Average turns: {turns/wins}")
   print(f"Losses: {losses}")
 
-simulate("words_accepted.txt", "words_solutions.txt", 3)
+simulate("words_accepted.txt", "words_solutions.txt", 1)

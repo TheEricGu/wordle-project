@@ -1,10 +1,9 @@
 from starting_word import *
 from collections import Counter
-from tqdm import tqdm
 
 def black_checker(black, word):
     for b in black:
-        if b in word and word.count(b) == 1:
+        if b in word:
             return False
     return True
 
@@ -43,20 +42,17 @@ def prune_words(accepted, solutions, guess, colors):
         else:
             print("Invalid color input")
             return
-    # print(black)
-    # print(yellow)
-    # print(green)
 
-    for word in tqdm(accepted):
+    for word in accepted:
         if green_checker(green, word):
             if yellow_checker(yellow, word, guess) or len(yellow) == 0:
                 if black_checker(black, word):
                     new_accepted.append(word)
 
-    for word in tqdm(solutions):
-        if black_checker(black, word):
-            if yellow_checker(yellow, word, guess):
-                if green_checker(green, word):
+    for word in solutions:
+        if green_checker(green, word):
+            if yellow_checker(yellow, word, guess) or len(yellow) == 0:
+                if black_checker(black, word):
                     new_solutions.append(word)
     return new_accepted, new_solutions
 
@@ -80,9 +76,8 @@ def solver(accepted, solutions):
         starting_word(accepted, solutions, False)
 
 def color(guess, solution):
-    
     # returns wordle coloring in bbgyy format (as a 5 character string)-----------------------------------
-    returns("bbbbb")
+    return("bbbbb")
 
 def test_solver(accepted, solutions, guess, solution):
     for i in range(6):
@@ -93,10 +88,9 @@ def test_solver(accepted, solutions, guess, solution):
             return i+1
     return 0
 
-
-print("Welcome to Worldle Solver!")
-print("Generating the top 10 best guesses for your starting word...")
-starting_word("words_accepted.txt", "words_solutions.txt", True)
-accepted = import_words("words_accepted.txt") 
-solutions = import_words("words_solutions.txt") 
-solver(accepted, solutions)
+# print("Welcome to Worldle Solver!")
+# print("Generating the top 10 best guesses for your starting word...")
+# starting_word("words_accepted.txt", "words_solutions.txt", True)
+# accepted = import_words("words_accepted.txt") 
+# solutions = import_words("words_solutions.txt") 
+# solver(accepted, solutions)

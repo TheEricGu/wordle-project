@@ -61,7 +61,10 @@ def starting_word(words_accepted, words_solutions, first):
     letter_positions_df['score'] = copod_model.decision_scores_
     letter_positions_df.sort_values('score',inplace=True)
 
-    if first: print("Top 10 words with highest decision scores:")
     letter_positions_df['rank'] = range(1,len(letter_positions_df)+1)
-    print(letter_positions_df.head(10)[['score','rank']])
+    if first: 
+        print("Top 5 words with highest decision scores:")
+        print(letter_positions_df.head(5)[['score','rank']])
+    else:
+        print(letter_positions_df.index[0])
     return letter_positions_df.index[0]
