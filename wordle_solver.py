@@ -26,9 +26,8 @@ def green_checker(green, word):
             return False
     return True
 
-def prune_words(accepted, solutions, guess, colors):
-    new_accepted = []
-    new_solutions = []
+def prune_words(words, guess, colors):
+    new = []
     black = []
     yellow = []
     green = []
@@ -43,26 +42,21 @@ def prune_words(accepted, solutions, guess, colors):
             print("Invalid color input")
             return
 
-    for word in accepted:
+    for word in words:
         if green_checker(green, word):
             if yellow_checker(yellow, word, guess) or len(yellow) == 0:
                 if black_checker(black, word):
-                    new_accepted.append(word)
+                    new.append(word)
 
-    for word in solutions:
-        if green_checker(green, word):
-            if yellow_checker(yellow, word, guess) or len(yellow) == 0:
-                if black_checker(black, word):
-                    new_solutions.append(word)
-    return new_accepted, new_solutions
+    return new
 
-def solver(accepted, solutions):
+def solver(words, num_guesses):
     for i in range(6):
         guess = input("Enter your guess: ")
         if len(guess) != 5:
             print("Guess length should be 5")
             return
-        if guess not in accepted:
+        if guess not in words:
             print("Not a valid guess")
             return
         colors = input("Enter your colors: ")
@@ -72,25 +66,27 @@ def solver(accepted, solutions):
         if len(colors) != 5:
             print("Color length should be 5")
             return
-        accepted, solutions = prune_words(accepted, solutions, guess, colors)
-        starting_word(accepted, solutions, False)
+        words = prune_words(words, guess, colors)
+        starting_word(words, num_guesses, False)
 
 def color(guess, solution):
     # returns wordle coloring in bbgyy format (as a 5 character string)-----------------------------------
     return("bbbbb")
 
-def test_solver(accepted, solutions, guess, solution):
+def test_solver(words, guess, solution):
     for i in range(6):
         colors = color(guess, solution)
-        accepted, solutions = prune_words(accepted, solutions, guess, colors)
-        guess = starting_word(accepted, solutions, False)
+        words = prune_words(words, guess, colors)
+        guess = starting_word(words, False)
         if guess == solution:
             return i+1
     return 0
 
-# print("Welcome to Worldle Solver!")
-# print("Generating the top 10 best guesses for your starting word...")
-# starting_word("words_accepted.txt", "words_solutions.txt", True)
-# accepted = import_words("words_accepted.txt") 
-# solutions = import_words("words_solutions.txt") 
-# solver(accepted, solutions)
+print("Welcome to Worldle Solver!")
+file_name = "words_solutions.txt"
+print("File name: " + file_name)
+num_guesses = 3
+print(f"Generating the top {num_guesses} guess(es) for your starting word...")
+starting_word(file_name, num_guesses, True)
+words = import_words(file_name) 
+solver(words, num_guesses)
