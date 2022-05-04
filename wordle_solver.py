@@ -67,26 +67,20 @@ def solver(words, num_guesses):
             print("Color length should be 5")
             return
         words = prune_words(words, guess, colors)
-        starting_word(words, num_guesses, False)
+        starting_word(words, num_guesses)
 
-def color(guess, solution):
-    # returns wordle coloring in bbgyy format (as a 5 character string)-----------------------------------
-    return("bbbbb")
+def import_words(file_name):
+    with open(file_name) as f:
+        words = f.read().splitlines()
+    return words
 
-def test_solver(words, guess, solution):
-    for i in range(6):
-        colors = color(guess, solution)
-        words = prune_words(words, guess, colors)
-        guess = starting_word(words, False)
-        if guess == solution:
-            return i+1
-    return 0
+if __name__ == "__main__":
+    file_name = "words_solutions.txt"
+    num_guesses = 3
 
-print("Welcome to Worldle Solver!")
-file_name = "words_solutions.txt"
-print("File name: " + file_name)
-num_guesses = 3
-print(f"Generating the top {num_guesses} guess(es) for your starting word...")
-starting_word(file_name, num_guesses, True)
-words = import_words(file_name) 
-solver(words, num_guesses)
+    print("Welcome to Worldle Solver!")
+    print("File name: " + file_name)
+    print(f"Generating the top {num_guesses} guess(es) for your starting word...")
+    words = import_words(file_name) 
+    starting_word(words, num_guesses)
+    solver(words, num_guesses)

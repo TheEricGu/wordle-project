@@ -5,15 +5,8 @@ from tqdm import tqdm
 import re
 from pyod.models.copod import COPOD
 
-def import_words(file_name):
-    with open(file_name) as f:
-        words = f.read().splitlines()
-    return words
-
-def starting_word(words, num_guesses, first):
-    if first:
-        words = import_words(words)
-        print(len(words), "words")
+def starting_word(words, num_guesses):
+    print(f"{len(words)} words remaining") 
 
     word_string = ''.join(words)
     letter_counts = dict(Counter(word_string))
