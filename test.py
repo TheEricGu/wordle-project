@@ -22,9 +22,8 @@ def simulate(words, iterations):
     else:
       losses += 1
     
-  print(results)
+  print(f"Results {results}")
   print(f"Wins: {wins}")
-  print(f"Average turns: {turns/wins}")
   print(f"Losses: {losses}")
 
 def find_all_char_positions(word, char):
