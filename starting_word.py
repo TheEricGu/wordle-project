@@ -44,7 +44,7 @@ def starting_word(words, num_guesses):
     letter_positions_df.sort_values('score',inplace=True)
 
     letter_positions_df['rank'] = range(1,len(letter_positions_df)+1)
-    print(f"Top {num_guesses} word(s) with highest decision scores:")
-    print(letter_positions_df.head(num_guesses)[['score','rank']])
+    # print(f"Top {num_guesses} word(s) with highest decision scores:")
+    # print(letter_positions_df.head(num_guesses)[['score','rank']])
     
     return letter_positions_df.index[0]

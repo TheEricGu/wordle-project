@@ -60,10 +60,11 @@ def test_solver(words, guess, solution):
         words = prune_words(words, guess, colors)
         guess = starting_word(words, 1)
         if guess == solution:
-            return i+1
+          print(f"The answer is '{guess}'. Guessed in {i+2} tries.\n")
+          return i+2
     return 0
 
 if __name__ == "__main__":
-  iterations = 1
+  iterations = 10
   print(f"Running test simulation with {iterations} iteration(s)")
   simulate("words_solutions.txt", iterations)

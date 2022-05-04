@@ -1,9 +1,9 @@
 from starting_word import *
 from collections import Counter
 
-def black_checker(black, word):
+def black_checker(black, green_and_yellow, word):
     for b in black:
-        if b in word:
+        if b in word and b not in green_and_yellow:
             return False
     return True
 
@@ -28,24 +28,37 @@ def green_checker(green, word):
 
 def prune_words(words, guess, colors):
     new = []
-    black = []
+    old_black = []
     yellow = []
     green = []
+    green_and_yellow = []
     for i in range(len(guess)):
         if colors[i] == 'b':
-            black.append(guess[i])
+            old_black.append(guess[i])
         elif colors[i] == 'y':
             yellow.append((guess[i], i))
+            green_and_yellow.append(guess[i])
         elif colors[i] == 'g':
             green.append((guess[i], i))
+            green_and_yellow.append(guess[i])
         else:
             print("Invalid color input")
             return
+    
+    black = []
+    for b in old_black:
+        if b not in green_and_yellow:
+            black.append(b)
+
+    # print(f"Black: {black}")
+    # print(f"Yellow: {yellow}")
+    # print(f"Green: {green}")
+    # print(f"green and yellow chars {green_and_yellow}")
 
     for word in words:
         if green_checker(green, word):
             if yellow_checker(yellow, word, guess) or len(yellow) == 0:
-                if black_checker(black, word):
+                if black_checker(black, green_and_yellow, word):
                     new.append(word)
 
     return new
@@ -82,5 +95,5 @@ if __name__ == "__main__":
     print("File name: " + file_name)
     print(f"Generating the top {num_guesses} guess(es) for your starting word...")
     words = import_words(file_name) 
-    starting_word(words, num_guesses)
+    # starting_word(words, num_guesses)
     solver(words, num_guesses)
