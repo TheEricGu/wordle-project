@@ -44,8 +44,7 @@ def color(guess, solution):
       counted_pos.add(index)
 
   for index, guess_char in enumerate(guess):
-    if guess_char in solution and \
-      output[index] != "g":
+    if guess_char in solution and output[index] != "g":
       positions = find_all_char_positions(solution, guess_char)
       for pos in positions:
         if pos not in counted_pos:
