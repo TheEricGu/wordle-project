@@ -24,6 +24,7 @@ def simulate(words, iterations):
     
   print(f"Results {results}")
   print(f"Wins: {wins}")
+  print(f"Average guesses: {round(turns/wins, 2)}")
   print(f"Losses: {losses}")
 
 def find_all_char_positions(word, char):
