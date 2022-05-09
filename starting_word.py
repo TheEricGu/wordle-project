@@ -37,7 +37,7 @@ def starting_word(words, num_guesses):
         if letter_positions_df[column].sum() == 0:
             letter_positions_df.drop(column, axis=1, inplace=True)
             
-    copod_model = COPOD(contamination=0.01)
+    copod_model = COPOD(contamination=0.01) #https://pyod.readthedocs.io/en/latest/pyod.models.html#pyod.models.copod.COPOD
     copod_model.fit(letter_positions_df)
 
     letter_positions_df['score'] = copod_model.decision_scores_

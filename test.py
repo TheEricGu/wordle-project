@@ -23,8 +23,7 @@ def simulate(words, iterations):
       losses += 1
     
   print(f"Results {results}")
-  print(f"Wins: {wins}")
-  print(f"Average guesses: {round((turns/wins), 2)}")
+  print(f"Wins: {wins} (average guesses: {round((turns/wins), 2)})")
   print(f"Losses: {losses}")
 
 def find_all_char_positions(word, char):
@@ -63,9 +62,10 @@ def test_solver(words, guess, solution):
         print(f"Colors: {colors}")
         words = prune_words(words, guess, colors)
         guess = starting_word(words, 1)
+    print(f"Couldn't figure out the answer in {i+1} tries.\n")
     return 0
 
 if __name__ == "__main__":
-  iterations = 10
+  iterations = 50
   print(f"Running test simulation with {iterations} iteration(s)")
-  simulate("words_solutions.txt", iterations)
+  simulate("words_accepted.txt", iterations)
