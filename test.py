@@ -66,6 +66,6 @@ def test_solver(words, guess, solution):
     return 0
 
 if __name__ == "__main__":
-  iterations = 50
+  iterations = 30
   print(f"Running test simulation with {iterations} iteration(s)")
   simulate("words_accepted.txt", iterations)

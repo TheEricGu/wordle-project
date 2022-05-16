@@ -3,7 +3,19 @@ import pandas as pd
 import string
 from tqdm import tqdm
 import re
+from pyod.models.ecod import ECOD
 from pyod.models.copod import COPOD
+from pyod.models.sos import SOS
+from pyod.models.kde import KDE
+from pyod.models.sampling import Sampling
+from pyod.models.pca import PCA
+from pyod.models.ocsvm import OCSVM
+from pyod.models.lmdd import LMDD
+from pyod.models.loci import LOCI
+from pyod.models.hbos import HBOS
+from pyod.models.iforest import IForest
+from pyod.models.loda import LODA
+from pyod.models.so_gaal import SO_GAAL
 
 def starting_word(words, num_guesses):
     print(f"{len(words)} words remaining") 
@@ -37,10 +49,24 @@ def starting_word(words, num_guesses):
         if letter_positions_df[column].sum() == 0:
             letter_positions_df.drop(column, axis=1, inplace=True)
             
-    copod_model = COPOD(contamination=0.01) #https://pyod.readthedocs.io/en/latest/pyod.models.html#pyod.models.copod.COPOD
-    copod_model.fit(letter_positions_df)
+    ecod = ECOD()
+    copod = COPOD()
+    sos = SOS()
+    kde = KDE()
+    sampling = Sampling(subset_size=1)
+    pca = PCA()
+    ocsvm = OCSVM()
+    lmdd = LMDD()
+    loci = LOCI()
+    hbos = HBOS()
+    iforest = IForest()
+    loda = LODA()
+    so_gaal = SO_GAAL()
 
-    letter_positions_df['score'] = copod_model.decision_scores_
+    model = copod
+    model.fit(letter_positions_df)
+
+    letter_positions_df['score'] = model.decision_scores_
     letter_positions_df.sort_values('score',inplace=True)
 
     letter_positions_df['rank'] = range(1,len(letter_positions_df)+1)
