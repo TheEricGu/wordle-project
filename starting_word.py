@@ -17,7 +17,7 @@ from pyod.models.iforest import IForest
 from pyod.models.loda import LODA
 from pyod.models.so_gaal import SO_GAAL
 
-def starting_word(words):
+def starting_word(words, model_type="copod"):
     print(f"{len(words)} words remaining") 
 
     word_string = ''.join(words)
@@ -48,27 +48,29 @@ def starting_word(words):
     for column in letter_positions_df.columns:
         if letter_positions_df[column].sum() == 0:
             letter_positions_df.drop(column, axis=1, inplace=True)
-            
-    ecod = ECOD()
-    copod = COPOD()
-    sos = SOS()
-    kde = KDE()
-    sampling = Sampling(subset_size=1)
-    pca = PCA()
-    ocsvm = OCSVM()
-    lmdd = LMDD()
-    loci = LOCI()
-    hbos = HBOS()
-    iforest = IForest()
-    loda = LODA()
-    so_gaal = SO_GAAL()
 
-    model = ecod
+    models = {
+        "ecod" : ECOD(),
+        "copod" : COPOD(),
+        "sos" : SOS(),
+        "kde" : KDE(),
+        "sampling" : Sampling(subset_size=1),
+        "pca" : PCA(),
+        "ocsvm" : OCSVM(),
+        "lmdd" : LMDD(),
+        "loci" : LOCI(),
+        "hbos" : HBOS(),
+        "iforest" : IForest(),
+        "loda" : LODA(),
+        "so_gaal" : SO_GAAL()
+    }
+    
+    model = models[model_type]
     model.fit(letter_positions_df)
 
     letter_positions_df['score'] = model.decision_scores_
     letter_positions_df.sort_values('score',inplace=True)
     letter_positions_df['rank'] = range(1,len(letter_positions_df)+1)
 
-    print(letter_positions_df.head(10))
+    # print(letter_positions_df.head(10))
     return letter_positions_df.index[0]
