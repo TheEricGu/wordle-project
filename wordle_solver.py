@@ -82,7 +82,7 @@ def solver(words, num_guesses):
             print("Color length should be 5")
             return
         words = prune_words(words, guess, colors)
-        starting_word(words, num_guesses)
+        starting_word(words)
 
 def import_words(file_name):
     with open(file_name) as f:
@@ -91,11 +91,10 @@ def import_words(file_name):
 
 if __name__ == "__main__":
     file_name = "words_accepted.txt"
-    num_guesses = 3
 
     print("Welcome to Worldle Solver!")
     print("File name: " + file_name)
     print(f"Generating the top {num_guesses} guess(es) for your starting word...")
     words = import_words(file_name) 
-    # starting_word(words, num_guesses)
+    # starting_word(words)
     solver(words, num_guesses)

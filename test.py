@@ -1,10 +1,11 @@
 import random 
 from wordle_solver import *
+from starting_word import *
 
 def simulate(words, iterations):
   words = import_words(words)
   results = []
-  guess = "saint"
+  guess = starting_word(words)
   for i in range(iterations):
     print("Iteration: " + str(i+1))
     solution = random.choice(words)
@@ -61,11 +62,11 @@ def test_solver(words, guess, solution):
               return i+1
         print(f"Colors: {colors}")
         words = prune_words(words, guess, colors)
-        guess = starting_word(words, 1)
+        guess = starting_word(words)
     print(f"Couldn't figure out the answer in {i+1} tries.\n")
     return 0
 
 if __name__ == "__main__":
-  iterations = 30
+  iterations = 1
   print(f"Running test simulation with {iterations} iteration(s)")
   simulate("words_accepted.txt", iterations)

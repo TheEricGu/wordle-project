@@ -17,7 +17,7 @@ from pyod.models.iforest import IForest
 from pyod.models.loda import LODA
 from pyod.models.so_gaal import SO_GAAL
 
-def starting_word(words, num_guesses):
+def starting_word(words):
     print(f"{len(words)} words remaining") 
 
     word_string = ''.join(words)
@@ -63,14 +63,12 @@ def starting_word(words, num_guesses):
     loda = LODA()
     so_gaal = SO_GAAL()
 
-    model = copod
+    model = ecod
     model.fit(letter_positions_df)
 
     letter_positions_df['score'] = model.decision_scores_
     letter_positions_df.sort_values('score',inplace=True)
-
     letter_positions_df['rank'] = range(1,len(letter_positions_df)+1)
-    # print(f"Top {num_guesses} word(s) with highest decision scores:")
-    # print(letter_positions_df.head(num_guesses)[['score','rank']])
-    
+
+    print(letter_positions_df.head(10))
     return letter_positions_df.index[0]
