@@ -5,16 +5,12 @@ from tqdm import tqdm
 import re
 from pyod.models.ecod import ECOD
 from pyod.models.copod import COPOD
-from pyod.models.sos import SOS
 from pyod.models.kde import KDE
 from pyod.models.sampling import Sampling
 from pyod.models.pca import PCA
 from pyod.models.ocsvm import OCSVM
-from pyod.models.lmdd import LMDD
-from pyod.models.loci import LOCI
 from pyod.models.hbos import HBOS
 from pyod.models.iforest import IForest
-from pyod.models.loda import LODA
 from pyod.models.so_gaal import SO_GAAL
 
 def starting_word(words, model_type="copod"):
@@ -52,17 +48,13 @@ def starting_word(words, model_type="copod"):
     models = {
         "ecod" : ECOD(),
         "copod" : COPOD(),
-        "sos" : SOS(),
         "kde" : KDE(),
         "sampling" : Sampling(subset_size=1),
         "pca" : PCA(),
         "ocsvm" : OCSVM(),
-        "lmdd" : LMDD(),
-        "loci" : LOCI(),
         "hbos" : HBOS(),
         "iforest" : IForest(),
-        "loda" : LODA(),
-        "so_gaal" : SO_GAAL()
+        "so_gaal" : SO_GAAL(stop_epochs=1)
     }
     
     model = models[model_type]

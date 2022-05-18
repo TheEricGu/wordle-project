@@ -68,7 +68,9 @@ def test_solver(words, guess, solution, model_type):
 
 if __name__ == "__main__":
   dataset = "words_solutions.txt"
-  iterations = 100
-  model_type = "ecod"
-  print(f"Running test simulation with {iterations} iteration(s), using {model_type.upper()} model")
+  # dataset = "words_accepted.txt"
+  iterations = 3
+  model_type = "so_gaal"
+  print(f"Running {iterations} test simulation(s) on {dataset} dataset using {model_type.upper()} model")
   simulate(dataset, iterations, model_type)
+  print(f"Finished {iterations} test simulation(s) on {dataset} dataset using {model_type.upper()} model")

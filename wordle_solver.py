@@ -16,17 +16,17 @@ def black_checker(black, green_and_yellow, word, guess):
             
     return True
 
-def yellow_checker(yellow, green, word, guess):
+def yellow_checker(yellow, green, word, guess, black):
     word_counts = Counter(word)
     guess_counts = Counter(guess)
-
     for y in yellow:
         if y[0] not in word_counts:
             return False
-        if y in green:
-            # There are greater than 1 instance of this character in this word.
-            if word_counts[y[0]] != guess_counts[y[0]]:
-                return False
+        for g in green:
+            if y[0] in g:
+                # There are greater than 1 instance of this character in this word.
+                if (word_counts[y[0]] != guess_counts[y[0]]) and not y[0] in black:
+                    return False
     for item in yellow:
         if word[item[1]] == item[0]:
             return False
@@ -59,7 +59,7 @@ def prune_words(words, guess, colors):
 
     for word in words:
         if green_checker(green, word):
-            if yellow_checker(yellow, green, word, guess) or len(yellow) == 0:
+            if yellow_checker(yellow, green, word, guess, black) or len(yellow) == 0:
                 if black_checker(black, green_and_yellow, word, guess):
                     new.append(word)
 
@@ -67,7 +67,7 @@ def prune_words(words, guess, colors):
 
 def solver(words):
     for i in range(6):
-        guess = input("Enter your guess: ")
+        guess = input("Enter your guesss: ")
         if len(guess) != 5:
             print("Guess length should be 5")
             return
@@ -95,5 +95,5 @@ if __name__ == "__main__":
     print("File name: " + file_name)
     print(f"Generating the top guess(es) for your starting word...")
     words = import_words(file_name)
-    # starting_word(words)
+    starting_word(words)
     solver(words)
