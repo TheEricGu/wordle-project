@@ -25,7 +25,7 @@ def yellow_checker(yellow, green, word, guess, black):
         for g in green:
             if y[0] in g:
                 # There are greater than 1 instance of this character in this word.
-                if (word_counts[y[0]] != guess_counts[y[0]]) and not y[0] in black:
+                if (word_counts[y[0]] < guess_counts[y[0]]) and not y[0] in black:
                     return False
     for item in yellow:
         if word[item[1]] == item[0]:

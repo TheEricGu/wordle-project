@@ -54,7 +54,7 @@ def starting_word(words, model_type="copod"):
         "ocsvm" : OCSVM(),
         "hbos" : HBOS(),
         "iforest" : IForest(),
-        "so_gaal" : SO_GAAL(stop_epochs=1)
+        "so_gaal" : SO_GAAL(stop_epochs=2)
     }
     
     model = models[model_type]
@@ -64,5 +64,5 @@ def starting_word(words, model_type="copod"):
     letter_positions_df.sort_values('score',inplace=True)
     letter_positions_df['rank'] = range(1,len(letter_positions_df)+1)
 
-    # print(letter_positions_df.head(10))
+    print(letter_positions_df.head(10))
     return letter_positions_df.index[0]
