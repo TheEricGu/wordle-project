@@ -64,5 +64,5 @@ def starting_word(words, model_type="copod"):
     letter_positions_df.sort_values('score',inplace=True)
     letter_positions_df['rank'] = range(1,len(letter_positions_df)+1)
 
-    print(letter_positions_df.head(10))
+    print(letter_positions_df.head(5))
     return letter_positions_df.index[0]
