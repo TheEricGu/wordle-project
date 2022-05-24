@@ -90,7 +90,7 @@ def import_words(file_name):
     return words
 
 if __name__ == "__main__":
-    file_name = "words_solutionsd.txt"
+    file_name = "words_solutions.txt"
     print("Welcome to Worldle Solver!")
     print("File name: " + file_name)
     print(f"Generating the top guess(es) for your starting word...")
